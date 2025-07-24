@@ -193,15 +193,30 @@ if question:
         ax.grid(axis='y')
         st.pyplot(fig)
 
+    # elif "employee distribution" in q or "title distribution" in q:
+    #     st.subheader("📊 Employee Distribution by Title")
+
+    #     fig, ax = plt.subplots(figsize=(10, 6))
+    #     merged["title"].value_counts().plot(kind='bar', color='purple', ax=ax)
+    #     ax.set_title("Distribution of Employees by Title")
+    #     ax.set_ylabel("Number of Employees")
+    #     plt.xticks(rotation=45)
+    #     st.pyplot(fig)
+
     elif "employee distribution" in q or "title distribution" in q:
         st.subheader("📊 Employee Distribution by Title")
-
+    
+        # تأكد إن عمود title موجود
+        if "title" not in merged.columns:
+            merged = merged.merge(title[["employee_id", "title"]], on="employee_id", how="left")
+    
         fig, ax = plt.subplots(figsize=(10, 6))
         merged["title"].value_counts().plot(kind='bar', color='purple', ax=ax)
         ax.set_title("Distribution of Employees by Title")
         ax.set_ylabel("Number of Employees")
         plt.xticks(rotation=45)
         st.pyplot(fig)
+
 
     elif "department switch" in q or "moved departments" in q or "switching departments" in q:
         st.subheader("🔄 Department Switching Analysis")
